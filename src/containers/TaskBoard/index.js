@@ -4,12 +4,14 @@ import styles from "./styles"
 import Button from "@material-ui/core/Button";
 import Add from "@material-ui/icons/Add"
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import {STATUSES} from "./../../const/index"
+import TaskList from "../../components/TaskList";
+import TaskForm from "../../components/TaskForm";
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux";
+import * as taskActions from "./../../actions/tasks"
+import { task } from "./../../reducers"
+
 const listTask = [
 	{
 		id: 0,
@@ -33,44 +35,32 @@ const listTask = [
 
 
 class TaskBoard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = ({
+      open: false
+    })
+  }
+  componentDidMount() {
+    const { taskActionCreators } = this.props
+    const { fetchListTaskRequest } = taskActionCreators
+    fetchListTaskRequest()
+  }
+
+  openForm = () => {
+    this.setState({
+      open: true
+    })
+  }
 	renderBoard() {
-		const { classes } = this.props
-		let xhtml = null
+		const { classes, tasks } = this.props
+    let xhtml = null
 		xhtml = (
 			<Grid container spacing={2}>
 				{STATUSES.map((status, index) => {
-					let listTaskFiltered = listTask.filter((task) => status.status == task.status)
+					let listTaskFiltered = tasks.filter((task) => status.status === task.status)
 					return (
-						<Grid item md={4} xs={12} key={status.id}>
-							<div className={classes.status}> {status.label} </div>
-							<Box mt={2} mb={2}>
-								<div className={classes.wrapperListTask}>
-									{ listTaskFiltered.map((taskFilter, taskFilterIndex) => {
-										return (
-											<Card key={taskFilter.id}>
-												<CardContent>
-													<Grid container justify="space-between">
-														<Grid item md={8}>
-															<Typography component="h2">
-																{taskFilter.title}
-															</Typography>
-														</Grid>
-														<Grid item md={4}>
-															{status.label}
-														</Grid>
-													</Grid>
-												</CardContent>
-												<CardActions>
-													<Button variant="contained" color="primary" size="small" >
-														Cac
-													</Button>
-												</CardActions>
-											</Card>
-										)
-									}) }
-								</div>
-							</Box>
-						</Grid>
+						<TaskList task={listTaskFiltered} status={status} key={status.id}/>
 					)
 				})}
 			</Grid>
@@ -78,15 +68,32 @@ class TaskBoard extends Component {
 		return xhtml
 	}
 	render() {
+    let { open } =  this.state
 		return (
 			<div>
-				<Button variant="contained" color="primary">
+				<Button variant="contained" color="primary"
+          onClick={this.openForm}
+        >
 					<Add /> Thêm danh sách công việc
 				</Button>
 				{this.renderBoard()}
+				<TaskForm
+          open={open}
+        />
 			</div>
 		);
 	}
 }
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks.listTask
+  }
+}
 
-export default withStyles(styles)(TaskBoard);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch)
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TaskBoard));
