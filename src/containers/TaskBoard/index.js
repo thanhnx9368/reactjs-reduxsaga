@@ -43,8 +43,8 @@ class TaskBoard extends Component {
   }
   componentDidMount() {
     const { taskActionCreators } = this.props
-    const { fetchListTaskRequest } = taskActionCreators
-    fetchListTaskRequest()
+		const { fetchListTask } = taskActionCreators
+		fetchListTask()
   }
 
   openForm = () => {

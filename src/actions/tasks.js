@@ -23,6 +23,7 @@ export const fetchListTaskFailed = err => {
     }
   }
 }
+/*
 
 export const fetchListTaskRequest = () => {
   return dispatch => {
@@ -35,4 +36,4 @@ export const fetchListTaskRequest = () => {
         console.log(err, 'err');
       })
   }
-}
+}*/
