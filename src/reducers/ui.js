@@ -5,7 +5,6 @@ let initatialState = {
 const uiReducer = (state = initatialState, action) => {
   switch (action.type) {
     case (uiConst.SHOW_LOADING) :
-      console.log('ahihi')
       state = {...state, isLoading: true}
       return {...state}
     case (uiConst.HIDE_LOADING) :

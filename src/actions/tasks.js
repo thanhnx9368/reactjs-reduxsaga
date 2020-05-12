@@ -1,5 +1,6 @@
 import * as taskApis from "./../apis/task"
 import * as taskConstants from "./../const/task"
+
 export const fetchListTask = () => {
   return {
     type: taskConstants.FETCH_TASK
@@ -23,17 +24,15 @@ export const fetchListTaskFailed = err => {
     }
   }
 }
-/*
 
-export const fetchListTaskRequest = () => {
-  return dispatch => {
-    dispatch(fetchListTask())
-    return taskApis.getList()
-      .then(res => {
-        dispatch(fetchListTaskSuccess(res.data))
-      })
-      .catch(err => {
-        console.log(err, 'err');
-      })
+export const filterTask = keyword => ({
+  type: taskConstants.FILTER_TASK,
+  keyword
+})
+
+export const filterTaskSuccess = data => ({
+  type: taskConstants.FILTER_TASK_SUCCESS,
+  payload: {
+    data
   }
-}*/
+})

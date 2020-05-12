@@ -5,34 +5,15 @@ import Button from "@material-ui/core/Button";
 import Add from "@material-ui/icons/Add"
 import Grid from "@material-ui/core/Grid";
 import {STATUSES} from "./../../const/index"
-import TaskList from "../../components/TaskList";
-import TaskForm from "../../components/TaskForm";
+
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux";
 import * as taskActions from "./../../actions/tasks"
-import { task } from "./../../reducers"
 
-const listTask = [
-	{
-		id: 0,
-		title: "PHP",
-		description: "Hoc PHP",
-		status: 0
-	},
-	{
-		id: 1,
-		title: "Javascript",
-		description: "Hoc Javascript",
-		status: 1
-	},
-	{
-		id: 2,
-		title: "Angular",
-		description: "Hoc Angular",
-		status: 2
-	},
-]
-
+/*Components*/
+import TaskList from "../../components/TaskList";
+import TaskForm from "../../components/TaskForm";
+import SearchBox from "../../components/SearchBox"
 
 class TaskBoard extends Component {
   constructor(props) {
@@ -54,7 +35,7 @@ class TaskBoard extends Component {
   }
 	renderBoard() {
 		const { classes, tasks } = this.props
-    let xhtml = null
+    let xhtml
 		xhtml = (
 			<Grid container spacing={2}>
 				{STATUSES.map((status, index) => {
@@ -76,6 +57,9 @@ class TaskBoard extends Component {
         >
 					<Add /> Thêm danh sách công việc
 				</Button>
+				<SearchBox
+
+				/>
 				{this.renderBoard()}
 				<TaskForm
           open={open}
