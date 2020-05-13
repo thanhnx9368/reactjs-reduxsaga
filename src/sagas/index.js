@@ -22,8 +22,8 @@ function* watchFilterTaskAction({keyword}) {
 }
 
 function* watchFetchListTaskAction() {
-  yield delay(2000)
   yield put(showLoading())
+  yield delay(2000)
   const res = yield call(taskApis.getList)
   let { status, data } = res
   if ( status === STATUS_CODE.SUCCESS ) {
@@ -31,7 +31,6 @@ function* watchFetchListTaskAction() {
   } else {
     yield put(taskAction.fetchListTaskFailed(data))
   }
-  yield delay(2000)
   yield put(hideLoading())
 }
 

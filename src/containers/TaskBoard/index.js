@@ -9,11 +9,14 @@ import {STATUSES} from "./../../const/index"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux";
 import * as taskActions from "./../../actions/tasks"
+import * as modalActions from "../../actions/modal"
+import { MODAL_TITLE_ADD } from "../../const/modal";
 
 /*Components*/
 import TaskList from "../../components/TaskList";
 import TaskForm from "../../components/TaskForm";
 import SearchBox from "../../components/SearchBox"
+import ModalContent from "../../components/Modal";
 
 class TaskBoard extends Component {
   constructor(props) {
@@ -29,9 +32,11 @@ class TaskBoard extends Component {
   }
 
   openForm = () => {
-    this.setState({
-      open: true
-    })
+    const { modalActionCreators } = this.props
+    const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    showModal()
+    changeModalTitle(MODAL_TITLE_ADD)
+    changeModalContent(<ModalContent/>)
   }
 	renderBoard() {
 		const { classes, tasks } = this.props
@@ -49,7 +54,7 @@ class TaskBoard extends Component {
 		return xhtml
 	}
 	render() {
-    let { open } =  this.state
+
 		return (
 			<div>
 				<Button variant="contained" color="primary"
@@ -57,13 +62,9 @@ class TaskBoard extends Component {
         >
 					<Add /> Thêm danh sách công việc
 				</Button>
-				<SearchBox
-
-				/>
+				<SearchBox />
 				{this.renderBoard()}
-				<TaskForm
-          open={open}
-        />
+				<TaskForm />
 			</div>
 		);
 	}
@@ -76,7 +77,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    taskActionCreators: bindActionCreators(taskActions, dispatch)
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActionCreators: bindActionCreators(modalActions, dispatch)
   }
 }
 
