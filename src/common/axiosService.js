@@ -15,5 +15,8 @@ class axiosService {
   get = (url) => {
     return this.instance.get(url)
   }
+  post = (url, body) => {
+    return this.instance.post(url, body)
+  }
 }
 export default new axiosService();

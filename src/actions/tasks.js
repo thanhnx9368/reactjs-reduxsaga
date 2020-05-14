@@ -36,3 +36,24 @@ export const filterTaskSuccess = data => ({
     data
   }
 })
+
+export const addTask = data => ({
+  type: taskConstants.ADD_TASK,
+  payload: {
+    title: data.title,
+    description: data.description,
+    status: data.status
+  }
+})
+
+export const addTaskSuccess = data => ({
+  type: taskConstants.ADD_TASK_SUCCESS,
+  payload: {
+    data
+  }
+})
+
+export const addTaskFailed = error => ({
+  type: taskConstants.ADD_TASK_FAILED,
+  error
+})

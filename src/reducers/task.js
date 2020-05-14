@@ -20,6 +20,25 @@ const reducer = (state = initialState, action) => {
       return {...state, listTask: data};
     }
 
+    case (taskConstants.ADD_TASK) : {
+      return {...state}
+    }
+
+    case (taskConstants.ADD_TASK_SUCCESS) : {
+      const { data } = action.payload
+      console.log(data, 'data 123');
+      return {
+        ...state,
+        listTask: [data].concat(state.listTask)
+      }
+    }
+
+    case (taskConstants.ADD_TASK_FAILED) : {
+      return {
+        ...state
+      }
+    }
+
     default:
       return state
   }
