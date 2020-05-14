@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import qs from "query-string"
 class axiosService {
   constructor() {
     const instance = axios.create();
@@ -17,6 +17,16 @@ class axiosService {
   }
   post = (url, body) => {
     return this.instance.post(url, body)
+  }
+  delete = (url, id) => {
+    return this.instance.delete(url, id)
+  }
+  querySerialize = (url, config) => {
+    const paramSerializer = (params) => {
+      return qs.stringify(params)
+    }
+    console.log(paramSerializer, 'paramSerializer');
+    return this.instance.get(url, {...config, paramSerializer})
   }
 }
 export default new axiosService();

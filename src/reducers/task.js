@@ -1,11 +1,10 @@
 import * as taskConstants from "./../const/task"
 
 const initialState = {
-  listTask: []
+  listTask: [],
+  taskEditting: null
 };
 const reducer = (state = initialState, action) => {
-
-
   switch (action.type) {
     case (taskConstants.FETCH_TASK) : {
       return {...state, listTask: []}
@@ -16,7 +15,6 @@ const reducer = (state = initialState, action) => {
     }
     case ( taskConstants.FILTER_TASK_SUCCESS ) : {
       const { data } = action.payload
-      console.log(data, 'data');
       return {...state, listTask: data};
     }
 
@@ -26,19 +24,34 @@ const reducer = (state = initialState, action) => {
 
     case (taskConstants.ADD_TASK_SUCCESS) : {
       const { data } = action.payload
-      console.log(data, 'data 123');
       return {
         ...state,
         listTask: [data].concat(state.listTask)
       }
     }
 
-    case (taskConstants.ADD_TASK_FAILED) : {
+    case (taskConstants.DELETE_TASK) : {
       return {
-        ...state
+        ...state,
       }
     }
 
+    case (taskConstants.DELETE_TASK_SUCCESS) : {
+      const { data } = action.payload
+      console.log(data, 'datadatadata');
+      return {
+        ...state,
+        listTask: data
+      }
+    }
+
+    case (taskConstants.EDIT_TASK) : {
+      const { task } = action.payload
+      return {
+        ...state,
+        taskEditting: task
+      }
+    }
     default:
       return state
   }

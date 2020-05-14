@@ -53,7 +53,32 @@ export const addTaskSuccess = data => ({
   }
 })
 
-export const addTaskFailed = error => ({
-  type: taskConstants.ADD_TASK_FAILED,
-  error
+
+export const deleteTask = id => ({
+  type: taskConstants.DELETE_TASK,
+  payload: {
+    id
+  }
 })
+
+export const deleteTaskSuccess = data => ({
+  type: taskConstants.DELETE_TASK_SUCCESS,
+  payload: {
+    data
+  }
+})
+
+export const editTask = task => ({
+  type: taskConstants.EDIT_TASK,
+  payload: {
+    task
+  }
+})
+
+export const editTaskSuccess = data => ({
+  type: taskConstants.EDIT_TASK_SUCCESS,
+  payload: {
+    data
+  }
+})
+

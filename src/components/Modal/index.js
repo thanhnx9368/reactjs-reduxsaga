@@ -71,7 +71,7 @@ class ModalContent extends Component {
   }
 }
 const mapStateToProps = state => ({
-
+  initialValues: state.tasks.taskEditting
 })
 const mapDispatchToProps = dispatch => ({
   taskActionCreators: bindActionCreators(taskActions, dispatch)

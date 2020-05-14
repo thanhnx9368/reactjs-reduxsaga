@@ -32,11 +32,14 @@ class TaskBoard extends Component {
   }
 
   openForm = () => {
-    const { modalActionCreators } = this.props
+    const { modalActionCreators, taskActionCreators } = this.props
     const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    const { editTask } =  taskActionCreators
     showModal()
     changeModalTitle(MODAL_TITLE_ADD)
+    editTask(null)
     changeModalContent(<ModalContent/>)
+
   }
 	renderBoard() {
 		const { classes, tasks } = this.props
@@ -46,13 +49,22 @@ class TaskBoard extends Component {
 				{STATUSES.map((status, index) => {
 					let listTaskFiltered = tasks.filter((task) => status.status === task.status)
 					return (
-						<TaskList task={listTaskFiltered} status={status} key={status.id}/>
+						<TaskList task={listTaskFiltered} status={status} key={status.id} onHandleEdit={this.onHandleEdit}/>
 					)
 				})}
 			</Grid>
 		)
 		return xhtml
 	}
+  onHandleEdit = task => {
+    const { modalActionCreators, taskActionCreators } = this.props
+    const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    const { editTask } =  taskActionCreators
+    showModal()
+    changeModalTitle('Cập nhật Task')
+    editTask(task)
+    changeModalContent(<ModalContent/>)
+  }
 	render() {
 
 		return (

@@ -19,30 +19,6 @@
       "status": 2
     },
     {
-      "type": "ADD_TASK",
-      "payload": {
-        "title": "Cool Titile Two",
-        "description": "bbbbbcccc",
-        "status": 0
-      },
-      "id": 3
-    },
-    {
-      "type": "ADD_TASK",
-      "payload": {
-        "title": "Cool Titile Two",
-        "description": "bbbbb",
-        "status": 0
-      },
-      "id": 4
-    },
-    {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
       "title": "An Example of a Google Bar Chart",
       "description": "bbbb",
       "status": 0,
@@ -53,6 +29,12 @@
       "description": "bbbb",
       "status": 0,
       "id": 8
+    },
+    {
+      "title": "CV 1 123",
+      "description": "OK",
+      "status": 0,
+      "id": 9
     }
   ]
 }

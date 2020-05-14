@@ -15,7 +15,7 @@ class TaskList extends Component {
           <div className={classes.wrapperListTask}>
             { task.map((taskFilter, taskFilterIndex) => {
               return (
-                <TaskItem task={taskFilter} status={status} key={taskFilterIndex}/>
+                <TaskItem task={taskFilter} status={status} key={taskFilterIndex} onHandleEdit={this.props.onHandleEdit}/>
               )
             }) }
           </div>

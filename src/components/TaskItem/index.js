@@ -7,9 +7,19 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Card from "@material-ui/core/Card";
 import { Fab, Icon } from "@material-ui/core";
+import * as taskActions from "../../actions/tasks"
+import {  bindActionCreators, compose } from "redux";
+import { connect } from "react-redux"
+
 class TaskItem extends Component {
+
+  onHandleDelete = (id) => {
+    const { taskActionCreators } = this.props
+    const { deleteTask } = taskActionCreators
+    deleteTask(id)
+  }
   render() {
-    const { classes, task, status } = this.props
+    const { classes, task, status, onHandleEdit } = this.props
     return (
       <Card key={task.id} className={classes.card}>
         <CardContent>
@@ -28,12 +38,24 @@ class TaskItem extends Component {
           <p>{task.description}</p>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Fab color="primary" aria-label="Edit" className={classes.fab} size="small">
+          <Fab
+            color="primary"
+            aria-label="Edit"
+            className={classes.fab}
+            size="small"
+            onClick={() => onHandleEdit(task) }
+          >
             <Icon fontSize="small">
               edit_icon
             </Icon>
           </Fab>
-          <Fab color="secondary" aria-label="Delete" className={classes.fab} size="small">
+          <Fab
+            color="secondary"
+            aria-label="Delete"
+            className={classes.fab}
+            size="small"
+            onClick={() => this.onHandleDelete(task.id)}
+          >
             <Icon fontSize="small">
               delete_icon
             </Icon>
@@ -44,4 +66,12 @@ class TaskItem extends Component {
   }
 }
 
-export default withStyles(Styles)(TaskItem);
+const mapDispatchToProps = dispatch => ({
+  taskActionCreators : bindActionCreators(taskActions, dispatch)
+})
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+)
+
+export default compose(withConnect,withStyles(Styles))(TaskItem);
