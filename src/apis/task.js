@@ -17,3 +17,6 @@ export const filterTask = params => {
   const paramSerlize = qs.stringify(params, { encode: true})
   return axiosService.get(`${API_ENDPOINT}/${taskUrl}?${paramSerlize}`)
 }
+export const updateTask = params => {
+  return axiosService.put(`${API_ENDPOINT}/${taskUrl}/${params.id}`, params)
+}

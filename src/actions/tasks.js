@@ -75,10 +75,17 @@ export const editTask = task => ({
   }
 })
 
-export const editTaskSuccess = data => ({
-  type: taskConstants.EDIT_TASK_SUCCESS,
+
+export const updateTaskSuccess = data => ({
+  type: taskConstants.UPDATE_TASK_SUCCESS,
   payload: {
     data
+  }
+})
+export const updateTask = task => ({
+  type: taskConstants.UPDATE_TASK,
+  payload: {
+    task
   }
 })
 

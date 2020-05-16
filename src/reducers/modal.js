@@ -8,7 +8,6 @@ const initialState = {
 const modalReducers = (state = initialState, action) => {
   switch (action.type) {
     case modalConst.SHOW_MODAL: {
-      console.log('ahihi')
       return {...state, isShowModal: true}
     }
     case modalConst.HIDE_MODAL: {

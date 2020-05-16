@@ -16,7 +16,10 @@ class TaskItem extends Component {
   onHandleDelete = (id) => {
     const { taskActionCreators } = this.props
     const { deleteTask } = taskActionCreators
-    deleteTask(id)
+    // eslint-disable-next-line no-restricted-globals
+    if ( confirm('Bạn có chắc chắn muốn xoá?')) {
+      deleteTask(id)
+    }
   }
   render() {
     const { classes, task, status, onHandleEdit } = this.props

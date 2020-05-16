@@ -45,19 +45,35 @@ export function* watchFetchListTaskAction() {
 
 export function* deleteTaskRequest({payload}) {
   const { id } = payload
-  yield put(showLoading())
   const res = yield call(taskApis.deleteTask, id)
+  yield put(showLoading())
   const { status } = res
   if ( status == STATUS_CODE.SUCCESS ) {
     const listTask = yield select(state => state.tasks.listTask)
-    const index = findIndex(id, listTask);
-    listTask.splice(index, 1)
-    yield put(taskAction.deleteTaskSuccess(listTask))
+    // const index = findIndex(id, listTask);
+    const newList = listTask.filter(item => item.id !== id)
+    yield put(taskAction.deleteTaskSuccess(newList))
   }
-  delay(500)
+  delay(1000)
   yield put(hideLoading())
 }
 
-export function* onEditTask({task}) {
-
+export function* onUpdateTask({payload}) {
+  const { task } = payload
+  yield put(showLoading())
+  const res = yield call(taskApis.updateTask, task)
+  const { status, data } = res
+  if ( status === STATUS_CODE.SUCCESS ) {
+    const listTask = yield select(state => state.tasks.listTask )
+    const index = findIndex(data.id, listTask)
+    const newList = [
+      ...listTask.slice(0, index),
+      task,
+      ...listTask.slice(index + 1)
+    ]
+    yield put(taskAction.updateTaskSuccess(newList))
+  }
+  delay(500)
+  yield put(hideModal())
+  yield put(hideLoading())
 }

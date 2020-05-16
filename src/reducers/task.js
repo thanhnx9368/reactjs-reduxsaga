@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
 
     case (taskConstants.DELETE_TASK) : {
       return {
-        ...state,
+      ...state,
       }
     }
 
@@ -52,8 +52,22 @@ const reducer = (state = initialState, action) => {
         taskEditting: task
       }
     }
+
+    case (taskConstants.UPDATE_TASK) : {
+      return {
+      ...state
+      }
+    }
+
+    case (taskConstants.UPDATE_TASK_SUCCESS) : {
+      const { data } = action.payload
+      return {
+        ...state,
+        listTask: data
+      }
+    }
     default:
       return state
-  }
+    }
 }
 export default reducer

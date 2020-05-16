@@ -8,23 +8,60 @@ import { Field, reduxForm } from 'redux-form'
 import {connect} from "react-redux";
 import {compose, bindActionCreators} from "redux";
 import handleSubmit from "redux-form/lib/handleSubmit";
-import renderTextField from "../FormHelper";
+import renderTextField from "../FormHelper/TextField";
 import validate from "../../common/validate";
 import * as taskActions from "../../actions/tasks"
+import * as modalActions from "../../actions/modal"
+import {withStyles} from "@material-ui/core/styles";
+import renderSelectField from "../FormHelper/SelectField";
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 
 class ModalContent extends Component {
+
+  renderStatusSelect() {
+    let xhtml = null
+    const { taskEditting } = this.props
+    if ( taskEditting && taskEditting.id ) {
+      xhtml = (
+        <Field
+          id="status"
+          name="status"
+          label="Trạng thái"
+          component={renderSelectField}
+        >
+          <MenuItem value={0}>Ready</MenuItem>
+          <MenuItem value={1}>Inprogress</MenuItem>
+          <MenuItem value={2}>Done</MenuItem>
+        </Field>
+      )
+    }
+    return xhtml
+  }
+
   handleSubmitForm = data => {
     const { taskActionCreators } = this.props
-    const { addTask } = taskActionCreators
-    const { title, description } = data
-    addTask({
-      title,
-      description,
-      status: 0
-    })
+    const { addTask, updateTask } = taskActionCreators
+    const { title, description, id, status } = data
+    if (!id && id !== 0 ) {
+      addTask({
+        title,
+        description,
+        status: 0
+      })
+    } else {
+      updateTask({
+        id,
+        title,
+        description,
+        status
+      })
+
+    }
+
   }
   render() {
-    const { handleSubmit, invalid, submitting } = this.props
+    const { classes, handleSubmit, invalid, submitting, modalActionCreators, initialValues } = this.props
+    const { hideModal } = modalActionCreators
     return (
       <form onSubmit={handleSubmit(this.handleSubmitForm)}>
         <DialogContent>
@@ -39,6 +76,7 @@ class ModalContent extends Component {
             margin="normal"
             rowsMax="5"
             component={renderTextField}
+            className={classes.baseInput}
           >
           </Field>
           <Field
@@ -48,12 +86,14 @@ class ModalContent extends Component {
             label="Mô tả"
             rowsMax="5"
             component={renderTextField}
+            className={classes.baseInput}
           >
           </Field>
+          {this.renderStatusSelect()}
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={this.onClose}
+            onClick={hideModal}
             color="primary"
           >
             Cancel
@@ -71,10 +111,12 @@ class ModalContent extends Component {
   }
 }
 const mapStateToProps = state => ({
-  initialValues: state.tasks.taskEditting
+  initialValues: state.tasks.taskEditting,
+  taskEditting: state.tasks.taskEditting
 })
 const mapDispatchToProps = dispatch => ({
-  taskActionCreators: bindActionCreators(taskActions, dispatch)
+  taskActionCreators: bindActionCreators(taskActions, dispatch),
+  modalActionCreators: bindActionCreators(modalActions, dispatch)
 })
 const FORM_NAME = "TASK_FORM"
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
@@ -83,4 +125,4 @@ const withReduxForm = reduxForm({
   validate
 })
 
-export default compose(withConnect, withReduxForm)(ModalContent);
+export default compose(withConnect, withReduxForm, withStyles(styles))(ModalContent);

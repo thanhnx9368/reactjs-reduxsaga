@@ -25,8 +25,10 @@ class axiosService {
     const paramSerializer = (params) => {
       return qs.stringify(params)
     }
-    console.log(paramSerializer, 'paramSerializer');
     return this.instance.get(url, {...config, paramSerializer})
+  }
+  put = (url, body) => {
+    return this.instance.put(url, body)
   }
 }
 export default new axiosService();
